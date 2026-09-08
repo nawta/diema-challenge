@@ -1,0 +1,78 @@
+# exp056: Conv1D+Transformer + C3D stats late fusion
+#
+# Backbone: Conv1D+Transformer (exp020 a01 best single-model settings).
+# Addition: C3DLateFusion_Model wraps it, projects 51-D C3D stats through a
+# small MLP, concatenates with backbone features for the final classifier.
+#
+# Go criterion (TODO 3AF): backbone single-model 29.87% F1 → +0.3pt target.
+# If no lift, we still report the value as evidence that C3D stats carry
+# marker-level info orthogonal to the 25-joint skeleton used by the backbone.
+
+defaults:
+  - _self_
+  - exp: "a00"
+
+debug: false
+seed: 42
+fold: 0
+num_folds: 10
+exp_tag: "a00"
+
+# data
+data_path: ""
+target_repr: "6d"
+clip_length: 64
+num_workers: 8
+c3d_cache_path: "output/c3d_stats_cache.npz"
+
+# backbone (exp020 a01 best)
+model_name: "conv1d_transformer"
+backbone_name: "conv1d_transformer"
+num_class: 12
+in_channels: 6
+dim: 192
+num_blocks: 2
+kernel_size: 17
+num_heads: 4
+mlp_ratio: 2.0
+drop_rate: 0.3
+late_dropout: 0.8
+late_dropout_start_step: 1000
+pool_type: "gap"
+
+# C3D fusion head
+c3d_in_dim: 51
+c3d_hidden: 128
+c3d_proj_dim: 64
+c3d_dropout: 0.2
+missing_c3d_as_zero: true  # fold 0-9 val samples all in cache; safeguard only
+
+# skeleton
+num_nodes: 25
+
+# training
+batch_size: 128
+max_epochs: 80
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+early_stopping_patience: 15
+loss_type: "ce"
+label_smoothing: 0.3
+
+# augmentation (mirror exp020 a01)
+augment_rotate: true
+augment_mirror: true
+augment_speed: true
+augment_noise_sigma: 2.5
+
+# aug (opt-in)
+seq_cutout_p: 0.0
+seq_cutout_segments: 5
+seq_cutout_ratio: 0.15
+body_scale_jitter_lo: 0.0
+body_scale_jitter_hi: 0.0
+mixup_alpha: 0.0
+cutmix_alpha: 0.0

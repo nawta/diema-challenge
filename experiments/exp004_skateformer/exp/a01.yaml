@@ -1,0 +1,12 @@
+# a01: SkateFormer + AdamW + cosine_warmup (transformer-friendly defaults)
+seed: 42
+exp_tag: "a01"
+optimizer: "AdamW"
+lr: 5.0e-4
+weight_decay: 0.05
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.1
+drop_path: 0.1

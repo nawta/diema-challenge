@@ -1,0 +1,6 @@
+# a00: Region-Aware backbone + DualHead wrapper (baseline)
+#
+# Loss: L_emo + L_style + L_adv (GRL λ=0.05) + 0.01 * L_ortho
+# Style / adv weights = 1.0 each, ortho = 0.01, GRL = 0.05 (TODO spec)
+seed: 42
+exp_tag: "a00"

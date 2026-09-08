@@ -1,0 +1,17 @@
+# exp080 scale_a01: width 160→288 + depth 3→4 conv blocks (~4M params)
+# Design note: bigger width + 1 extra conv block + higher mlp_ratio.
+# Regularization scaled with capacity (drop_rate 0.40, late_dropout earlier).
+seed: 42
+exp_tag: "scale_a01"
+dim: 288
+num_conv_blocks: 4
+num_cross_blocks: 2
+num_heads: 4
+mlp_ratio: 2.5
+drop_rate: 0.40
+late_dropout: 0.85
+late_dropout_start_step: 700
+label_smoothing: 0.35
+lr: 2.0e-3
+weight_decay: 2.0e-3
+warmup_epochs: 7

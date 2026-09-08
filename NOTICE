@@ -1,0 +1,93 @@
+diema-challenge
+Copyright 2026 The diema-challenge authors
+
+This product is licensed under the Apache License, Version 2.0 (the "License");
+you may not use these files except in compliance with the License. A copy of the
+License is provided in the LICENSE file in this repository.
+
+================================================================================
+Third-party components
+================================================================================
+
+This repository contains original code as well as model architectures that were
+ported from or adapted from the projects listed below. Each upstream project is
+governed by its own license; please consult the corresponding upstream
+repository for its exact terms before reusing that code. The references below
+are provided for attribution and reproducibility.
+
+Skeleton-action model architectures
+-----------------------------------
+- CTR-GCN — Channel-wise Topology Refinement Graph Convolution (ICCV 2021)
+  Upstream: https://github.com/Uason-Chen/CTR-GCN
+  ( diema/models/ctrgcn/ )
+
+- SkateFormer — Skeletal-Temporal Transformer (ECCV 2024)
+  Upstream: https://github.com/KAIST-VICLab/SkateFormer
+  ( diema/models/skateformer/ )
+
+- ProtoGCN — Prototype-based Graph Convolution (CVPR 2025)
+  Upstream: https://github.com/firework8/ProtoGCN
+  ( diema/models/protogcn/ )
+
+- ST-GCN / STGCN++ — Spatial-Temporal Graph Convolution
+  Ported from an internal skeleton-action baseline maintained by the authors.
+  ( diema/models/stgcn/ )
+
+Sequence-model backbones (adapted from Kaggle competition solutions)
+--------------------------------------------------------------------
+- Conformer — Convolution-augmented Transformer (Gulati et al., INTERSPEECH 2020,
+  https://arxiv.org/abs/2005.08100). Implementation adapted from the ASL
+  Fingerspelling 11th-place solution by Baohao Liao and Shaomu Tan.
+  Upstream: https://github.com/BaohaoLiao/aslfrv4
+  ( diema/models/conformer/ )
+
+- Squeezeformer (Kim et al., 2022, https://arxiv.org/abs/2206.00888) with
+  rotary position embeddings (RoPE, https://arxiv.org/abs/2104.09864).
+  Implementation adapted from the Kaggle ASL Fingerspelling 1st-place solution
+  by Christof Henkel.
+  Upstream: https://github.com/ChristofHenkel/kaggle-asl-fingerspelling-1st-place-solution
+  ( diema/models/squeezeformer/ )
+
+- Conv1D + Transformer hybrid — a faithful PyTorch port of the Kaggle ASL
+  Signs 1st-place solution by hoyso48 (Hoyeol Sohn). This is the basis of our
+  Region-Aware Conv-Transformer, the best single model in the ensemble.
+  Upstream: https://www.kaggle.com/competitions/asl-signs/writeups/hoyeol-sohn-1st-place-solution-1dcnn-combined-with
+  ( diema/models/conv1d_transformer/ )
+
+- Keypoint Pool MLP — MLP-only two-stream (joint + bone) network with lateral
+  connections, ported from the Kaggle ASL Signs 12th-place solution by
+  DONJYARAHOI. Related paper: Two-Stream Network (https://arxiv.org/abs/2211.01367).
+  Upstream: https://www.kaggle.com/competitions/asl-signs/writeups/donjyarahoi-12th-place-solution-mlp-based-structur
+  ( diema/models/keypoint_pool_mlp/ )
+
+- Skeleton augmentations (per-body-part sequence cutout, time-shift delta
+  features) adapted from the Kaggle ASL Signs 8th-place solution by Darragh.
+  ( diema/data/augmentations.py )
+
+External-pretraining transfer backbones
+---------------------------------------
+- MotionBERT / MotionBERT-Lite (DSTformer) — used as a frozen feature extractor.
+  Upstream: https://github.com/Walter0807/MotionBERT
+  ( diema/models/motionbert/ )
+
+- PoseC3D (ResNet3d-SlowOnly) — a clean-room, pure-PyTorch re-implementation of
+  the PYSKL ResNet3dSlowOnly backbone, written to avoid the mmcv build
+  dependency. No upstream weights are included.
+  Upstream reference: https://github.com/kennymckormick/pyskl (PYSKL) and
+  the MMAction2 project.
+  ( diema/models/posec3d/ )
+
+Architectural references (papers)
+---------------------------------
+- Structured Keypoint Pooling (https://arxiv.org/abs/2303.15270) additionally
+  informs diema/models/keypoint_pool_mlp/.
+
+================================================================================
+Datasets (NOT included)
+================================================================================
+
+This repository does NOT contain, and cannot redistribute, the DIEM-A or AIDE
+datasets or any artifact derived from them (skeletons, features, rationales,
+rendered motion, labels, splits, or out-of-fold predictions). The DIEM-A dataset
+is governed by a User License Agreement that prohibits redistribution. See the
+"Data availability" section of README.md.

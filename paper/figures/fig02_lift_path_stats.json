@@ -1,0 +1,43 @@
+{
+  "canonical_7way": "33.86% per-fold / 34.03% pooled (logit-mean convention)",
+  "stages": {
+    "STGCN++ baseline": {
+      "perfold_mean_pct": 25.731401490161502,
+      "perfold_sd_pct": 4.027116563033687,
+      "pooled_pct": 26.31828970298446,
+      "boot95_ci_pct": [
+        25.36578283357861,
+        27.229556803968812
+      ]
+    },
+    "best single (Region-Aware)": {
+      "perfold_mean_pct": 30.05113527635662,
+      "perfold_sd_pct": 3.4798731854463876,
+      "pooled_pct": 30.258327902780103,
+      "boot95_ci_pct": [
+        29.321431064295826,
+        31.14609850593292
+      ]
+    },
+    "7-way ensemble": {
+      "perfold_mean_pct": 33.858649103665876,
+      "perfold_sd_pct": 2.9169602676322115,
+      "pooled_pct": 34.028177413087754,
+      "boot95_ci_pct": [
+        33.01499963888704,
+        35.03589311553537
+      ]
+    },
+    "11-way logit-mean": {
+      "perfold_mean_pct": 36.80272120497009,
+      "perfold_sd_pct": 3.9996066420874126,
+      "pooled_pct": 36.93539601421651,
+      "boot95_ci_pct": [
+        35.896610357178425,
+        37.938428164646716
+      ]
+    }
+  },
+  "weakest_improvement_class": "sadness",
+  "weakest_delta_pp": 6.119910635864727
+}

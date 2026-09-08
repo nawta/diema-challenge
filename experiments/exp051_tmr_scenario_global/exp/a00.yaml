@@ -1,0 +1,7 @@
+# exp051 a00: masked scenario, text_loss_weight=0.1, same_scenario_and_emotion
+# (recommended default — most A-judgment candidate)
+
+exp_tag: "a00"
+text_cache_path: "output/scenario_text_cache_masked.pt"
+text_loss_weight: 0.1
+positive_pairing: "same_scenario_and_emotion"

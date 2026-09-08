@@ -1,0 +1,28 @@
+# @package _global_
+# exp069 a00: a04 regularisation (drop_rate=0.4, label_smoothing=0.5) at
+# a01 scheduler horizon (max_epochs=40, late_dropout p=0.8 @ step 1000).
+#
+# Background: observed exp020 a04 (drop=0.4, ls=0.5, max_epochs=80)
+# beat exp020 a01 (drop=0.3, ls=0.3, max_epochs=80) by +0.38pt fold-0.
+# However, the production ensemble member is a01 trained at max_epochs=40
+# (cosine_warmup is sensitive to max_epochs: a01@80=28.57% vs a01@40=32.55%
+# fold-0). exp069 tests whether a04 reg at production max_epochs=40 beats
+# a01@40 directly.
+#
+# Single-axis change vs production a01@40:
+#   drop_rate 0.3 -> 0.4
+#   label_smoothing 0.3 -> 0.5
+# Everything else identical to exp020/a01 / fold ckpts in production.
+seed: 42
+exp_tag: "a00"
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 40
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.5
+drop_rate: 0.4
+late_dropout: 0.8

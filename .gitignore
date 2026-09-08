@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.python-version
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets — never commit
+.env
+*.key
+*.pem
+
+# Experiment tracking / logs
+wandb/
+lightning_logs/
+/logs/
+
+# ------------------------------------------------------------------------
+# Data & derived artifacts — NOT part of this repository and NOT
+# redistributable. The DIEM-A and AIDE datasets and ALL artifacts derived
+# from them (skeletons, features, rationales, rendered motion, labels,
+# splits, out-of-fold predictions, caches) are excluded under the DIEM-A
+# User License Agreement and the AIDE license. See README "Data availability".
+# These patterns keep such files from being committed by accident.
+# ------------------------------------------------------------------------
+# NOTE: leading slash anchors these to the repo root so they do NOT match
+# source packages like diema/data/ or nested output dirs.
+/data/
+/input/
+/output/
+/outputs/
+/checkpoints/
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.bvh
+*.c3d
+*.mp4
+*.pkl
+*.parquet

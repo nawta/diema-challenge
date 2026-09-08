@@ -1,0 +1,7 @@
+# a00: clip_length=128, label_smoothing=0.1, batch=256, 10-clip test
+# Expected: significant improvement over exp001 (clip_length 64→128)
+seed: 42
+clip_length: 128
+batch_size: 256
+label_smoothing: 0.1
+test_clips: 10

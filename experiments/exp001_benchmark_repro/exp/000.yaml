@@ -1,0 +1,4 @@
+# Default configuration: single fold for smoke testing
+seed: 42
+fold: 0
+num_folds: 10

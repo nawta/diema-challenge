@@ -1,0 +1,13 @@
+# exp052 a02 (Tier 1b): InfoNCE mode, λ=0.1, temp=0.07.
+#
+# Review suggestion #2: per-part batch contrastive instead of cosine pull —
+# explicit hard-negative pressure at temp=0.07 (CLIP convention). At
+# batch=128 and ~95% per-part coverage, every part has many valid rows.
+#
+# Run:
+#   python -m experiments.exp052_gap_generated_rationale.run fold=0 exp=a02
+
+exp_tag: "a02"
+part_loss_weight: 0.1
+part_loss_mode: "infonce"
+part_loss_temperature: 0.07

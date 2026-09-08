@@ -1,0 +1,4 @@
+# exp065 a00: λ_attr = 0.05 (lightest aux supervision)
+seed: 42
+exp_tag: "a00"
+lambda_attr: 0.05

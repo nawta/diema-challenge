@@ -1,0 +1,3 @@
+# a00: Conv1D+Transformer baseline (AdamW lr=4e-3, cosine_warmup, 80 epochs, label_smoothing=0.1)
+seed: 42
+exp_tag: "a00"

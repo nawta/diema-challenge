@@ -1,0 +1,8 @@
+# a04: clip=64 + label_smoothing=0.1 only (ablation)
+seed: 42
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.1
+test_clips: 1
+max_epochs: 65
+early_stopping_patience: 10

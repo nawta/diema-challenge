@@ -1,0 +1,18 @@
+# a03: Conv1D+Transformer deeper (blocks 2 -> 3) — backbone hyperparam grid
+# Design note: small disciplined backbone-axis grid.
+# Fold-0 target: > 32.55% F1 (exp020 a01 fold_0).
+# Single-axis change vs a01: num_blocks 2 -> 3.
+seed: 42
+exp_tag: "a03"
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 80
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.3
+drop_rate: 0.3
+late_dropout: 0.8
+num_blocks: 3

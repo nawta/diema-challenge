@@ -1,0 +1,19 @@
+# a04: Conv1D+Transformer stronger reg (drop 0.3 -> 0.4, ls 0.3 -> 0.5)
+# Design note: small disciplined backbone-axis grid.
+# Fold-0 target: > 32.55% F1 (exp020 a01 fold_0).
+# Rationale: a01 plateaus around 0.32 then declines (overfits, train_loss << val_loss).
+# Adds more regularization without changing capacity.
+# Single-axis change vs a01: drop_rate 0.3 -> 0.4, label_smoothing 0.3 -> 0.5.
+seed: 42
+exp_tag: "a04"
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 80
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.5
+drop_rate: 0.4
+late_dropout: 0.8

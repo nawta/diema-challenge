@@ -1,0 +1,5 @@
+# exp060 a01: stronger KD pull, λ_kd=1.0, T=2.0.
+# Run: python -m experiments.exp060_vlm_softlabel_kd.run fold=0 exp=a01
+exp_tag: "a01"
+kd_loss_weight: 1.0
+kd_temperature: 2.0

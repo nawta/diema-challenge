@@ -1,0 +1,21 @@
+# a00: Shallow 5-layer Conformer (bliao direct port)
+#      AdamW + cosine_warmup, Transformer-friendly defaults.
+seed: 42
+exp_tag: "a00"
+optimizer: "AdamW"
+lr: 5.0e-4
+weight_decay: 1.0e-3
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 100
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.1
+
+num_layers: 5
+hidden_dim: 384
+mlp_dim: 1024
+num_heads: 6
+conv_kernel_size: 15
+dropout: 0.1
+drop_path: 0.1

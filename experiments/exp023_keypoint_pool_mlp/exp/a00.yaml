@@ -1,0 +1,20 @@
+# a00: DONJYARAHOI baseline
+#   - joint + bone 2-stream MLP
+#   - bidirectional lateral connections between stacks
+#   - AdamW 1e-3, cosine_warmup (warmup=5), 80 epochs
+# - label_smoothing=0.4 (Tier S note)
+seed: 42
+exp_tag: "a00"
+clip_length: 64
+batch_size: 128
+loss_type: "ce"
+label_smoothing: 0.4
+hidden_dim: 256
+num_blocks: 4
+dropout: 0.3
+lateral_connection: true
+optimizer: "AdamW"
+lr: 1.0e-3
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 80

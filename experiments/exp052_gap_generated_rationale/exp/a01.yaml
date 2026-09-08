@@ -1,0 +1,13 @@
+# exp052 a01 (Tier 1a): CE warmup + λ=0.2 cosine.
+#
+# Review suggestion #1: let CE head mature (10 epochs CE-only) before
+# the alignment loss fires, then λ=0.2 stronger pull. Targets the
+# "geometry-classifier mismatch" hypothesis (root-cause analysis #1).
+#
+# Run:
+#   python -m experiments.exp052_gap_generated_rationale.run fold=0 exp=a01
+
+exp_tag: "a01"
+part_loss_weight: 0.2
+part_loss_warmup_epochs: 10
+part_loss_mode: "cosine"

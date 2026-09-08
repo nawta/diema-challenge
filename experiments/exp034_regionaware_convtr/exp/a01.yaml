@@ -1,0 +1,14 @@
+# a01: Region-Aware Conv1D+Tr + aug package
+# Builds on a00 by enabling:
+#   - body_scale_jitter ±10% (rotation_6d → only virtual_root)
+#   - same-emotion temporal CutMix (alpha=1.0)
+#   - sequence_cutout_per_body_part (p=0.4 default Darragh setting)
+# These all run on the existing 1.02 M region-aware backbone.
+seed: 42
+exp_tag: "a01"
+seq_cutout_p: 0.4
+seq_cutout_segments: 5
+seq_cutout_ratio: 0.15
+body_scale_jitter_lo: 0.9
+body_scale_jitter_hi: 1.1
+cutmix_alpha: 1.0

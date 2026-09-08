@@ -1,0 +1,5 @@
+# exp060 a00: λ_kd=0.5, T=2.0 (Hinton 2015 default-ish).
+# Run: python -m experiments.exp060_vlm_softlabel_kd.run fold=0 exp=a00
+exp_tag: "a00"
+kd_loss_weight: 0.5
+kd_temperature: 2.0

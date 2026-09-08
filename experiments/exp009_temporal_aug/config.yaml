@@ -1,0 +1,43 @@
+# exp009: STGCN++ + temporal/joint augmentation strategies
+defaults:
+  - _self_
+  - exp: "a02"
+
+debug: false
+seed: 42
+fold: 0
+num_folds: 10
+exp_tag: "a02"
+
+data_path: ""
+target_repr: "6d"
+clip_length: 64
+num_workers: 8
+
+model_name: "stgcn"
+num_class: 12
+in_channels: 6
+dropout: 0.5
+edge_weighting: true
+plusplus: true
+unit_dropout: 0.15
+
+num_nodes: 25
+
+batch_size: 128
+max_epochs: 65
+optimizer: "SGD"
+lr: 0.2
+weight_decay: 5.0e-4
+scheduler_type: "cosine"
+warmup_epochs: 0
+early_stopping_patience: 10
+loss_type: "ce"
+label_smoothing: 0.1
+mixup_alpha: 0.0
+
+augment_rotate: true
+augment_mirror: true
+augment_speed: true
+augment_noise_sigma: 2.5
+joint_dropout_prob: 0.0

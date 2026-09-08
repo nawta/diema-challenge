@@ -1,0 +1,8 @@
+# exp052 a00: conservative cosine alignment, λ_part=0.05 (recommended default).
+#
+# Run:
+#   python -m experiments.exp052_gap_generated_rationale.run fold=0 exp=a00
+
+exp_tag: "a00"
+part_loss_weight: 0.05
+part_loss_mode: "cosine"

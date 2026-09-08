@@ -1,0 +1,5 @@
+# a02: PartAug (joint dropout) p=0.1, body-part level masking
+seed: 42
+exp_tag: "a02"
+joint_dropout_prob: 0.1
+mixup_alpha: 0.0

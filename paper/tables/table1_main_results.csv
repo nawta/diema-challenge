@@ -1,0 +1,8 @@
+System,Trainable params (M)‡,Macro-F1 (mean ± SD),Macro-F1 95% CI,Accuracy (mean ± SD)
+STGCN++ official baseline,1.40★,25.21 ± 4.49★,n/a★,27.11 ± 3.67★
+STGCN++ reproduced,1.41,25.73 ± 4.03,"[25.37, 27.23]",27.54 ± 3.92
+Best single (Region-Aware),1.03,30.05 ± 3.48,"[29.32, 31.15]",30.87 ± 3.43
+7-way ensemble,12.98,33.86 ± 2.92,"[33.01, 35.04]",34.68 ± 3.00
+11-way logit-mean (submitted),12.98,36.80 ± 4.00,"[35.90, 37.94]",37.40 ± 4.06
+"# ★ Challenge-reported (92-performer full LPO, official 25.2 % ± 4.5 %, no bootstrap CI), NOT re-evaluated with our script; our reproduction (25.73 ± 4.03) is within SD of the official number, so the official baseline serves only as an external anchor and all improvement numbers are same-split comparisons."
+# ‡ The table reports trainable parameters; frozen external branches add fewer than 0.01 M trainable parameters each.

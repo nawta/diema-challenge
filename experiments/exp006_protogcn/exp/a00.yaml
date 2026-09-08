@@ -1,0 +1,8 @@
+# a00: ProtoGCN baseline (CTR-GCN backbone + per-body-part prototype head)
+seed: 42
+exp_tag: "a00"
+clip_length: 64
+batch_size: 128
+loss_type: "ce"
+label_smoothing: 0.1
+num_proto: 16

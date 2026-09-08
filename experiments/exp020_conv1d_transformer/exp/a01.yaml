@@ -1,0 +1,22 @@
+# a01: Conv1D+Transformer + stronger regularization
+# Rationale (a00 10-fold: val_f1=28.73% ± 2.88%):
+#   - a00 performed well but std 2.88% is slightly higher than SkateFormer (2.56%)
+#   - drop_rate=0.2 and label_smoothing=0.1 may be undertuned
+#   - ASL Signs top solutions used label_smoothing 0.3-0.5 heavily
+# a01 improvements:
+#   - drop_rate 0.2 -> 0.3 (stronger dropout inside Conv/Transformer blocks)
+#   - label_smoothing 0.1 -> 0.3 (ASL Signs 4th / 12th inspired)
+#   - max_epochs 80 -> 80 (full training, was 40 in a00 batch)
+seed: 42
+exp_tag: "a01"
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 80
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.3
+drop_rate: 0.3
+late_dropout: 0.8

@@ -1,0 +1,27 @@
+# b00: exp020 a01 (Conv1D+Tr, current single best at 29.87% F1) + aug
+# Adds the domain-generalization augmentation package on top of the current
+# best Conv1D+Tr recipe (label_smoothing=0.3, drop_rate=0.3):
+#   - body_scale_jitter ±10% (rotation_6d → only virtual_root)
+#   - same-emotion temporal CutMix (alpha=1.0)
+#   - sequence_cutout_per_body_part (p=0.4 default Darragh setting)
+# Direct ablation against exp020 a01 to measure the aug package's effect on
+# the strongest single-model recipe so far.
+seed: 42
+exp_tag: "b00"
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 80
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.3
+drop_rate: 0.3
+late_dropout: 0.8
+seq_cutout_p: 0.4
+seq_cutout_segments: 5
+seq_cutout_ratio: 0.15
+body_scale_jitter_lo: 0.9
+body_scale_jitter_hi: 1.1
+cutmix_alpha: 1.0

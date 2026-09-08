@@ -1,0 +1,20 @@
+# exp080 scale_a00: width 160→224 (~2M params) — smoke variant
+# Design note: width-first scaling, keep depth small
+# (cross_blocks=2) since the cross-part transformer has only 6 tokens and
+# adding depth on 6 tokens caused the Squeezeformer/Conformer collapses.
+# Regularization slightly bumped (drop_rate 0.30→0.35) to absorb 2× capacity.
+# LR scaled per 1/sqrt(width_ratio) heuristic: 4e-3 → 3e-3.
+seed: 42
+exp_tag: "scale_a00"
+dim: 224
+num_conv_blocks: 3
+num_cross_blocks: 2
+num_heads: 4
+mlp_ratio: 2.0
+drop_rate: 0.35
+late_dropout: 0.80
+late_dropout_start_step: 1000
+label_smoothing: 0.30
+lr: 3.0e-3
+weight_decay: 1.0e-3
+warmup_epochs: 5

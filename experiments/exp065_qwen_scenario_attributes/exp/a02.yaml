@@ -1,0 +1,4 @@
+# exp065 a02: λ_attr = 0.20 (heaviest aux supervision)
+seed: 42
+exp_tag: "a02"
+lambda_attr: 0.20

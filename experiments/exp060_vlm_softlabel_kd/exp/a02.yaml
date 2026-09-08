@@ -1,0 +1,5 @@
+# exp060 a02: hot teacher, λ_kd=1.0, T=4.0 (smoother distribution → more dark knowledge transfer).
+# Run: python -m experiments.exp060_vlm_softlabel_kd.run fold=0 exp=a02
+exp_tag: "a02"
+kd_loss_weight: 1.0
+kd_temperature: 4.0

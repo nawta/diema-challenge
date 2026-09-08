@@ -1,0 +1,48 @@
+# exp023: Structured Keypoint Pooling MLP (DONJYARAHOI, ASL Signs 12th place)
+# Default settings: AdamW lr=1e-3, cosine_warmup warmup=5, 80 epochs, label_smoothing=0.4
+
+defaults:
+  - _self_
+  - exp: "a00"
+
+debug: false
+seed: 42
+fold: 0
+num_folds: 10
+exp_tag: "a00"
+
+# data
+data_path: ""
+target_repr: "6d"
+clip_length: 64
+num_workers: 8
+
+# model
+model_name: "keypoint_pool_mlp"
+num_class: 12
+in_channels: 6
+hidden_dim: 256
+num_blocks: 4
+dropout: 0.3
+lateral_connection: true
+
+# skeleton
+num_nodes: 25
+
+# training
+batch_size: 128
+max_epochs: 80
+optimizer: "AdamW"
+lr: 1.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+early_stopping_patience: 15
+loss_type: "ce"
+label_smoothing: 0.4
+
+# augmentation
+augment_rotate: true
+augment_mirror: true
+augment_speed: true
+augment_noise_sigma: 2.5

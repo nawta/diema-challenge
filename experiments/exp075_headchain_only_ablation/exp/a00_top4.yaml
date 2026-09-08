@@ -1,0 +1,7 @@
+# @package _global_
+# exp075 a00 top-4: head-chain only (ranks #1-4)
+#   Spine3=5, Neck=6, Neck1=7, Head=8
+# Expected F1: 25-28% per plan §5.3 (target ≥ 25% for criterion B).
+seed: 42
+exp_tag: "a00_top4"
+keep_joints: [5, 6, 7, 8]

@@ -1,0 +1,17 @@
+# a01: CenterLoss (SupCon replacement for small data)
+# Based on a code review: center loss is more stable than
+# pairwise SupCon on 8K samples.
+# lambda_center=0.001 with exp warmup (tau=20) → effective ~0 at start.
+seed: 42
+exp_tag: "a01"
+label_smoothing: 0.3
+drop_rate: 0.3
+
+# CenterLoss config
+use_center_loss: true
+lambda_center: 0.001
+lambda_tau: 20.0
+center_lr: 0.5
+
+# Disable SupCon
+supcon_lambda: 0.0

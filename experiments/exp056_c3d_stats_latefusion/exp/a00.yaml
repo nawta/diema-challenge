@@ -1,0 +1,4 @@
+# exp056 a00: default Conv1D+Tr backbone + 64-D C3D proj, no freeze
+exp_tag: "a00"
+c3d_proj_dim: 64
+c3d_dropout: 0.2

@@ -1,0 +1,7 @@
+# a00: full backbone finetune (no freeze)
+# AdamW lr=1e-4 (gentle for pretrained), wd=0.05, label_smoothing=0.3,
+# head_dropout=0.3, max_epochs=40, batch=32.
+seed: 42
+exp_tag: "a00"
+freeze_backbone: false
+lr: 1.0e-4

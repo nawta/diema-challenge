@@ -1,0 +1,32 @@
+# @package _global_
+# exp074 a00: Region-Aware Conv1D+Transformer with 3-part upper-body split.
+#
+# 3 parts (head_chain / arms / lower_context = 16 nodes total) instead of
+# the canonical 6 parts (25 nodes). Smaller dim than exp034 a00 (160 → 128)
+# to keep params in the 0.3-0.8M sweet spot for 8K samples (DIEM-A scale).
+#
+# Single-axis test vs exp034 a00:
+#   body_parts: 6 → 3 (head_chain + arms + lower_context)
+#   dim: 160 → 128
+#   max_epochs: 80 → 40 (production a01 horizon, lesson from exp069)
+seed: 42
+exp_tag: "a00"
+model_name: "region_aware_conv1d_transformer"
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 40
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.3
+drop_rate: 0.3
+late_dropout: 0.8
+dim: 128
+num_conv_blocks: 3
+kernel_size: 7
+num_cross_blocks: 2
+num_heads: 4
+mlp_ratio: 2.0
+use_per_part_gate: true

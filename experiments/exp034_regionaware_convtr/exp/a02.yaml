@@ -1,0 +1,13 @@
+# a02: Region-Aware Conv1D+Tr + aug (gentler)
+# Retry of a01 with reduced aug strength:
+#   - cutmix_alpha 1.0 -> 0.5 (softer temporal swap ratio)
+#   - seq_cutout_p 0.4 -> 0.2 (less frequent body-part masking)
+#   - body_scale_jitter: no-op for rotation_6d (confirmed by code review fix)
+# a01 (full-strength aug) gave -0.34pt on fold 0 vs a00 (no aug).
+# The hypothesis is that halving the aug strength brings it into neutral→positive.
+seed: 42
+exp_tag: "a02"
+seq_cutout_p: 0.2
+seq_cutout_segments: 5
+seq_cutout_ratio: 0.15
+cutmix_alpha: 0.5

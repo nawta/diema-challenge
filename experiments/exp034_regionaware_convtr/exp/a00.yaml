@@ -1,0 +1,5 @@
+# a00: Region-Aware Conv1D+Transformer baseline
+# Matches exp020 a01 regularization (label_smoothing=0.3, drop_rate=0.3).
+# 6 body-part branches with shared cross-part transformer and per-part gating.
+seed: 42
+exp_tag: "a00"

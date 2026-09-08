@@ -1,0 +1,8 @@
+# a00: SkateFormer SGD baseline (matches CTR-GCN/STGCN++ optimizer for fair comparison)
+seed: 42
+exp_tag: "a00"
+optimizer: "SGD"
+lr: 0.2
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.1

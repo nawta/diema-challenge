@@ -1,0 +1,8 @@
+# a01: linear probe only (frozen backbone, train head)
+# Equivalent to exp081 but with end-to-end Lightning + augmentation.
+# AdamW lr=1e-3 (higher OK with frozen backbone), wd=0.01.
+seed: 42
+exp_tag: "a01"
+freeze_backbone: true
+lr: 1.0e-3
+weight_decay: 0.01

@@ -1,0 +1,13 @@
+# @package _global_
+# exp075 a01 top-10: top-4 + ranks #5-#10
+#   ranks #5-#10:
+#     #5  RightLeg     (18)
+#     #6  LeftLeg      (22)
+#     #7  RightUpLeg   (17)
+#     #8  RightToeBase (20)
+#     #9  RightArm     (10)
+#     #10 LeftArm      (14)
+# Total 10 nodes. Expected F1: 28-30% per plan §5.3.
+seed: 42
+exp_tag: "a01_top10"
+keep_joints: [5, 6, 7, 8, 10, 14, 17, 18, 20, 22]

@@ -1,0 +1,60 @@
+# exp082: MotionBERT-Lite backbone finetune
+# Uses joint_pos stream (3D positions, root-relative) → torch project to
+# H36M-17 2D in model.forward() → frozen-or-trainable DSTformer →
+# pool → 12-class head.
+
+defaults:
+  - _self_
+  - exp: "a00"
+
+debug: false
+seed: 42
+fold: 0
+num_folds: 10
+exp_tag: "a00"
+
+# data
+data_path: ""
+target_repr: "6d"
+stream_type: "joint_pos"
+clip_length: 64
+num_workers: 4
+
+# model
+model_name: "motionbert"
+num_class: 12
+in_channels: 3
+pretrained_path: "data/motionbert/checkpoints/MB_pretrain_lite.bin"
+dim_feat: 256
+dim_rep: 512
+depth: 5
+mb_num_heads: 8
+mlp_ratio: 4
+num_joints: 17
+maxlen: 243
+head_dropout: 0.3
+freeze_backbone: false
+drop_axis: "y"
+flip_vertical: true
+head_type: "per_joint_flat"
+
+# skeleton
+num_nodes: 25
+
+# training
+batch_size: 32
+max_epochs: 40
+optimizer: "AdamW"
+lr: 1.0e-4
+weight_decay: 0.05
+scheduler_type: "cosine_warmup"
+warmup_epochs: 3
+early_stopping_patience: 15
+loss_type: "ce"
+label_smoothing: 0.3
+
+# augmentation
+augment_rotate: true
+augment_mirror: true
+augment_speed: true
+augment_noise_sigma: 2.5

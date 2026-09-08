@@ -1,0 +1,9 @@
+# @package _global_
+# exp075 a02 top-10 + arms: top-10 + L/R ForeArm and L/R Hand
+#   added 4 nodes: RightForeArm (11), RightHand (12), LeftForeArm (15), LeftHand (16)
+# Total 14 nodes. Expected F1: 29-30% per plan §5.3.
+# Tests whether full arm chains (including distal joints) help over
+# just shoulder + arm proximals.
+seed: 42
+exp_tag: "a02_top10_arms"
+keep_joints: [5, 6, 7, 8, 10, 11, 12, 14, 15, 16, 17, 18, 20, 22]

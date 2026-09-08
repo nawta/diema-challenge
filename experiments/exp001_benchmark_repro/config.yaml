@@ -1,0 +1,46 @@
+# exp001: STGCN++ benchmark reproduction
+# See: diema_challenge_implementation_spec.md §7.3 for config reference
+# All keys from ExpConfig are listed here so Hydra allows CLI overrides.
+
+defaults:
+  - _self_
+  - exp: "000"
+
+debug: false
+seed: 42
+fold: 0
+num_folds: 10
+
+# data
+data_path: ""
+target_repr: "6d"
+clip_length: 64
+num_workers: 8
+
+# model
+model_name: "stgcn"
+num_class: 12
+in_channels: 6
+dropout: 0.5
+edge_weighting: true
+plusplus: true
+unit_dropout: 0.15
+
+# skeleton
+num_nodes: 25
+
+# training
+batch_size: 128
+max_epochs: 65
+optimizer: "SGD"
+lr: 0.2
+weight_decay: 5.0e-4
+scheduler_type: "cosine"
+early_stopping_patience: 10
+loss_type: "ce"
+
+# augmentation
+augment_rotate: true
+augment_mirror: true
+augment_speed: true
+augment_noise_sigma: 2.5

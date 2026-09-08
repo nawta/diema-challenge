@@ -1,0 +1,19 @@
+# exp080 scale_a00_long: scale_a00 with extended training horizon.
+# After 10-fold scale_a00 confirms +1.87pp fold-0 lift, this variant tests
+# whether even longer training (max_epochs 80→120) compounds the gain.
+# User directive: "学習を十分にさせて" — let it train sufficiently.
+seed: 42
+exp_tag: "scale_a00_long"
+dim: 224
+num_conv_blocks: 3
+num_cross_blocks: 2
+num_heads: 4
+mlp_ratio: 2.0
+drop_rate: 0.35
+late_dropout: 0.80
+late_dropout_start_step: 1000
+label_smoothing: 0.30
+lr: 3.0e-3
+weight_decay: 1.0e-3
+warmup_epochs: 5
+max_epochs: 120

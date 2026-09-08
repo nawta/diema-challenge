@@ -1,0 +1,12 @@
+# a00: CE + SupCon (λ=0.05, warmup 5ep CE-only)
+# Backbone: exp020 a01 best settings (dim=192, drop=0.3, LS=0.3)
+seed: 42
+exp_tag: "a00"
+label_smoothing: 0.3
+drop_rate: 0.3
+supcon_lambda: 0.05
+supcon_warmup_epochs: 5
+supcon_temperature: 0.1
+supcon_w_strong: 2.0
+supcon_w_weak: 0.5
+proj_dim: 128

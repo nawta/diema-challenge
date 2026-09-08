@@ -1,0 +1,45 @@
+# exp021: Squeezeformer + RoPE (ASL FS 1st place / Dieter, Christof Henkel)
+defaults:
+  - _self_
+  - exp: "a00"
+
+debug: false
+seed: 42
+fold: 0
+num_folds: 10
+exp_tag: "a00"
+
+data_path: ""
+target_repr: "6d"
+clip_length: 64
+num_workers: 8
+
+model_name: "squeezeformer"
+num_class: 12
+in_channels: 6
+num_layers: 17
+d_model: 192
+num_heads: 4
+mlp_ratio: 4.0
+conv_kernel_size: 15
+dropout: 0.1
+drop_path: 0.1
+max_seq_len: 256
+
+num_nodes: 25
+
+batch_size: 128
+max_epochs: 120
+optimizer: "AdamW"
+lr: 4.5e-3
+weight_decay: 0.05
+scheduler_type: "cosine_warmup"
+warmup_epochs: 10
+early_stopping_patience: 20
+loss_type: "ce"
+label_smoothing: 0.1
+
+augment_rotate: true
+augment_mirror: true
+augment_speed: true
+augment_noise_sigma: 2.5

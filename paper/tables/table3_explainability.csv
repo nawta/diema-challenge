@@ -1,0 +1,10 @@
+Component,Metric,Value,95% CI / null,What it shows
+Part-masking,"Faithfulness AUC gap (important−reverse), zero-mask",+0.124 ± 0.031,10-fold SD; positive in all folds,Masking important parts lowers F1: attributions are faithful
+Temporal saliency,"AUC gap (salient−reverse), negative result",+0.002 (≈0),entropy 98.7% of log T (≈uniform)†,Frame importance is diffuse (a reported negative)
+Stability,Spearman ρ vs σ=0 ref at σ=0.02,+0.983 ± 0.039,10-fold SD; top part never flips,Attribution ranking is stable under input noise
+Counterfactual,Most-disruptive edit Δp(true): head+freeze,−0.0164,mean over 864 val × 10 folds,Perturbing motion changes predictions: motion-dependent
+Narrator grounding,Unsupported claims in audited cards,0/50 cards,deterministic audit,No unsupported claims in the 50 audited cards
+F1 cost,ΔF1: baseline → with post-hoc saliency/LMA export,0.0 pp,post-hoc; no retraining,Explanations add no accuracy cost
+Submitted ensemble,Part-masking + LMA under a shuffle (permutation-importance) mask,part gap +7.85 ± 1.76 pp; ρ = +0.517,"part gap 10-fold SD; ρ 95% CI [+0.333, +0.700]; permutation $p = 0.001$","Part-masking faithfulness and LMA alignment also hold for the submitted 11-way logit-mean ensemble (baseline Macro-F1 34.65 ± 4.29%), not just one model"
+LMA correlation,Region-level saliency–LMA Spearman ρ,ρ = +0.500; kinematics control ρ = +0.033,permutation $p<0.001$,Semantic alignment with the Laban vocabulary
+# † Per-sample entropy; the per-emotion class-mean is 99.5% of log T — two aggregations of the same near-uniform distribution.

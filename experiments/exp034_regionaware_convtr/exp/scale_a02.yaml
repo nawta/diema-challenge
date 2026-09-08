@@ -1,0 +1,18 @@
+# exp080 scale_a02: width 160→352 + depth + heads 4→8 + cross_blocks 2→3 (~7M params)
+# Most aggressive variant. cross_blocks bumped to 3 (note: don't go beyond
+# 3 on 6-token sequence to avoid memorization collapse seen at Squeezeformer 17L).
+# Strongest regularization across all variants.
+seed: 42
+exp_tag: "scale_a02"
+dim: 352
+num_conv_blocks: 4
+num_cross_blocks: 3
+num_heads: 8
+mlp_ratio: 3.0
+drop_rate: 0.45
+late_dropout: 0.90
+late_dropout_start_step: 500
+label_smoothing: 0.40
+lr: 1.5e-3
+weight_decay: 3.0e-3
+warmup_epochs: 8

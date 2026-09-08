@@ -1,0 +1,9 @@
+# a00: CTR-GCN baseline (SGD/cosine, clip=64, label_smoothing=0.1)
+seed: 42
+exp_tag: "a00"
+clip_length: 64
+batch_size: 128
+loss_type: "ce"
+label_smoothing: 0.1
+adj_strategy: "aagcn"
+adaptive: true

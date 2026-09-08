@@ -1,0 +1,11 @@
+# exp051 a10: UNMASKED scenario cache, leak probe (masking ablation)
+#
+# a10 vs a00 measures how much of the +F1 from text supervision is attributable
+# to emotion label words leaking through the scenario string. If a00 ≈ a10 within
+# 0.3pt, masked cache is the safe default; if a10 > a00 by > 0.3pt, the gap is
+# textual leakage and a00 (masked) is the honest number to report.
+
+exp_tag: "a10"
+text_cache_path: "output/scenario_text_cache.pt"  # unmasked
+text_loss_weight: 0.1
+positive_pairing: "same_scenario_and_emotion"

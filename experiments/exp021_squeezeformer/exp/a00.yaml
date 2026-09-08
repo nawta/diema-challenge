@@ -1,0 +1,25 @@
+# a00: Squeezeformer + RoPE baseline (ASL FS 1st place adaptation)
+# - 17-layer Improved Squeezeformer encoder
+# - LLaMA-style RoPE attention (num_heads=4, head_dim=48)
+# - Macaron FFN + RoPE MHSA + Conv(k=15) + Macaron FFN per block
+# - AdamW lr=4.5e-3, cosine_warmup (warmup_epochs=10), max_epochs=120
+# - label_smoothing=0.1, drop_path=0.1 (linearly scaled per layer)
+seed: 42
+exp_tag: "a00"
+optimizer: "AdamW"
+lr: 4.5e-3
+weight_decay: 0.05
+scheduler_type: "cosine_warmup"
+warmup_epochs: 10
+max_epochs: 120
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.1
+drop_path: 0.1
+
+num_layers: 17
+d_model: 192
+num_heads: 4
+mlp_ratio: 4.0
+conv_kernel_size: 15
+dropout: 0.1

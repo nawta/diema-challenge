@@ -1,0 +1,127 @@
+# Forbidden / leakage-prone token list for DIEM-A scenario + rationale text.
+#
+# Source of truth: (G-12labels gate) + §3.3
+# Consumed by:
+# - tools/build_scenario_cache.py --mask
+# - tools/check_rationale_leakage.py
+#
+# Matching rules:
+#   - emotion_aliases / country_aliases / intensity_aliases:
+#       case-insensitive word-boundary match (re.IGNORECASE + \b).
+#   - filename_regex: raw regex applied on text.
+#   - hallucination_tokens: word-boundary match, report as warning not block.
+#
+# Intensity adverbs (`low/medium/high/mild/intense`) are NOT in emotion_aliases
+# because they occur naturally in kinematics captions ("the head moves at low
+# velocity"); they are only flagged via `filename_regex` when appearing as the
+# bare tag ` L/M/H `.
+
+emotion_aliases:
+  # 12 canonical class names
+  - anger
+  - contempt
+  - disgust
+  - fear
+  - gratitude
+  - guilt
+  - jealousy
+  - joy
+  - pride
+  - sadness
+  - shame
+  - surprise
+  # Common derived forms (adjectives, gerunds, nouns)
+  - angry
+  - angered
+  - contemptuous
+  - contemptful
+  - disgusted
+  - disgusting
+  - fearful
+  - afraid
+  - grateful
+  - thankfulness
+  - thankful
+  - guilty
+  - jealous
+  - envy
+  - envious
+  - joyful
+  - joyous
+  - happy
+  - happiness
+  - proud
+  - sad
+  - sadly
+  - ashamed
+  - shameful
+  - shamed
+  - surprised
+  - surprising
+  - astonished
+  - astonishment
+
+country_aliases:
+  - JP
+  - JPN
+  - TW
+  - TWN
+  - Japan
+  - Japanese
+  - Taiwan
+  - Taiwanese
+
+# filename pattern leakage (performer_id / intensity tag).
+# These are REGEX (not literals) — applied with re.search, no IGNORECASE.
+# Intensity pattern does NOT use \b because `_` is a Python word character,
+# so `\b_` never matches at the `_` boundary that appears in `JP_06_joy_1_L`.
+# Use (?:^|[_ ]) / (?:$|[_ ]) as explicit boundary anchors instead.
+filename_regex:
+  - '\bP[0-9]{3}\b'              # performer id (full DIEM-A notation)
+  - '\b(JP|TW)_[0-9]{2}\b'       # challenge-subset performer id (e.g. JP_06)
+  - '(?:^|[_ ])(L|M|H)(?:$|[_ ])' # bare intensity tag bounded by _, space, or EOS
+  - '\btest[0-9]{4}\b'           # anonymized test filename
+  - '[A-Za-z]+_[0-9]{2}:'        # C3D marker label prefix (e.g. `JP_43:ARIEL`)
+
+# hallucination probe — objects/background that should not appear
+# in motion-only caption but are common LLM hallucinations.
+hallucination_tokens:
+  - table
+  - chair
+  - wall
+  - door
+  - room
+  - light
+  - book
+  - phone
+  - weapon
+  - knife
+  - gun
+  - food
+  - drink
+  - glass
+  - bottle
+  - window
+  - floor
+  - ceiling
+
+# Body-parts NOT present in DIEMA 25-joint skeleton. Flagged as hallucination if
+# a rationale claims e.g. "fingers close into a fist" since skeleton25 has no
+# finger joints (hand = single joint per side).
+out_of_skeleton_tokens:
+  - finger
+  - fingers
+  - thumb
+  - pinky
+  - eye
+  - eyes
+  - eyelid
+  - jaw
+  - tongue
+  - lip
+  - teeth
+  - hair
+  - ear
+  - nostril
+
+schema_version: 1

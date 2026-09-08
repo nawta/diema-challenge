@@ -1,0 +1,79 @@
+# exp100: GroupDRO + Region-Aware Conv1D + Transformer (Phase ACC Track B)
+#
+# GroupDRO (Sagawa et al. 2020) on top of the exp034 region-aware backbone.
+# Reweights per-sample CE toward the worst-performing performer group to fight
+# the diagnosed performer confound (performer effect = 10.8× emotion effect).
+#
+# GroupDRO adds NO new parameters — only reweights CE — which is why it avoids
+# the backbone-collapse failure modes of SupCon/MoE/DANN (exp036/040/042).
+#
+# Base settings mirror exp034-a00: dim=160, AdamW lr=4e-3, cosine_warmup
+# (warmup 5/80ep), label_smoothing=0.3, drop_rate=0.3.
+#
+# Plan: ~/.claude/plans/replicated-gathering-raven.md Track B (GroupDRO)
+# TODO: Phase ACC Track B — B0
+
+debug: false
+seed: 42
+fold: 0
+num_folds: 10
+exp_tag: "a00"
+
+# data
+data_path: ""
+target_repr: "6d"
+stream_type: "rotation_6d"
+clip_length: 64
+num_workers: 8
+
+# model (mirrors exp034-a00)
+model_name: "region_aware_conv1d_transformer"
+num_class: 12
+in_channels: 6
+dim: 160
+num_conv_blocks: 3
+kernel_size: 7
+num_cross_blocks: 2
+num_heads: 4
+mlp_ratio: 2.0
+drop_rate: 0.3
+late_dropout: 0.8
+late_dropout_start_step: 1000
+use_per_part_gate: true
+
+# skeleton
+num_nodes: 25
+
+# training (mirrors exp034-a00)
+batch_size: 128
+max_epochs: 80
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+early_stopping_patience: 15
+loss_type: "ce"
+label_smoothing: 0.3
+
+# augmentation (same as exp034/exp020 baseline)
+augment_rotate: true
+augment_mirror: true
+augment_speed: true
+augment_noise_sigma: 2.5
+
+# domain generalization (off by default — consistent with exp034-a00)
+seq_cutout_p: 0.0
+seq_cutout_segments: 5
+seq_cutout_ratio: 0.15
+body_scale_jitter_lo: 0.0
+body_scale_jitter_hi: 0.0
+cutmix_alpha: 0.0
+# mixup_alpha is always 0.0 for GroupDRO (enforced in GroupDROLightningModel)
+
+# GroupDRO-specific settings
+use_group_dro: true
+group_mode: "country"        # JP=0, TW=1 (2 groups)
+num_groups: 2
+eta_dro: 0.01                # DRO dual learning rate (Sagawa 2020 default)
+warmup_epochs_dro: 10        # epochs of plain CE before reweighting activates

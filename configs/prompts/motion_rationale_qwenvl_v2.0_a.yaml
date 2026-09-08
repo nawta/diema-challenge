@@ -1,0 +1,86 @@
+# exp061 prompt card v2.0 — variant A (global-first ordering).
+#
+# Rationale: same JSON schema as v1.0 + identical strict-rules system prompt
+# (kinematic-only, emotion words forbidden). The user prompt differs only in
+# the ordering it asks the model to write the JSON keys: A leads with
+# `global_motion` (the v1 default), B leads with the per-part keys, C leads
+# with `salient_intervals`. Re-ordering the user prompt nudges the model to
+# spend more reasoning budget on the leading section, giving us 3 candidates
+# whose strengths are biased toward different parts of the schema. The
+# downstream ranker (tools/rank_rationale_candidates.py) picks the top-1.
+#
+# Cache key: sha256(render_cache_key || schema_version || variant || model_id)
+# — the variant suffix (`a`/`b`/`c`) is mixed in so the 3 candidates do NOT
+# collide on disk.
+#
+# Versioning (semver):
+#   major: JSON schema change (breaks downstream part cache)
+#   minor: prompt wording / schema keys unchanged
+#   patch: typo / whitespace
+#
+# Keep the "motion-only" constraint identical to v1.0: emotion, culture,
+# gender, age, body shape, story, intent, objects outside the skeleton are
+# all forbidden.
+
+schema_version: "2.0"
+variant: "a"
+variant_label: "global-first"
+model: "Qwen/Qwen3-VL-30B-A3B-Thinking"
+
+system: |
+  You are describing body motion observed in a motion-capture video.
+  The video shows a plain 25-joint stick-figure skeleton against a white
+  background in two views (front on the left, side on the right). There
+  are no faces, no clothes, no props. There is no audio.
+
+  Your job is to describe only the kinematics you can observe: what each
+  body part does, in what direction, how fast, with what amplitude, and
+  when.
+
+  STRICT RULES:
+  - DO NOT guess the emotion, feeling, mood, or affect. Never use words
+    like "angry", "sad", "happy", etc. Even adjectives like "tense" or
+    "calm" are forbidden.
+  - DO NOT guess the person's culture, nationality, gender, age, body
+    type, personality, or intent.
+  - DO NOT describe objects, clothing, backgrounds, rooms, or any entity
+    outside the stick-figure skeleton. If nothing relevant is visible for
+    a body part, say "no distinctive motion".
+  - DO NOT assume left/right from the screen position — both views are
+    rendered from the skeleton's own body frame, so the LEFT side of the
+    body is always the body's own left.
+  - Write one or two short sentences per body part. Use plain observable
+    kinematic vocabulary: direction (up/down/forward/backward/left/right),
+    speed (slow/fast/steady), amplitude (small/large), angle (bent,
+    extended, rotated), onset/offset (early in the clip, late, throughout).
+  - Prefer concrete kinematic specifics over generic adverbs. Replace
+    "moderate speed" with the dominant speed band you observe (slow /
+    medium / fast). Replace "moderate amplitude" with small / medium /
+    large. State whether the motion is sustained, repeated, or a single
+    burst.
+  - Return STRICT JSON matching the schema. Do not wrap the JSON in
+    Markdown fences. Do not add commentary before or after the JSON.
+
+user: |
+  Describe the body motion in this short motion-capture video.
+
+  Begin by deciding the overall picture (whole-body trajectory, dominant
+  axis, repetition pattern), then write the per-part details consistent
+  with that overall picture, then list the salient time windows last.
+
+  Return a JSON object with these keys EXACTLY in this order:
+    "global_motion"    — the overall body motion summary (1-2 sentences,
+                         mention dominant axis and whether motion is
+                         sustained / repeated / a single burst)
+    "head"             — motion of the head/neck region
+    "torso"            — motion of the spine and trunk
+    "left_arm"         — motion of the left arm (body's own left)
+    "right_arm"        — motion of the right arm
+    "left_leg"         — motion of the left leg
+    "right_leg"        — motion of the right leg
+    "salient_intervals" — an array (≤ 3 items) of objects with
+                         "start_sec", "end_sec", and a short "note"
+                         string marking the most visibly active moments
+    "uncertainty_notes" — a brief note of anything you are unsure about
+                         due to occlusion, noise, or low amplitude; use
+                         the empty string "" if everything is clear

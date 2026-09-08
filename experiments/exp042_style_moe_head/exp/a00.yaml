@@ -1,0 +1,9 @@
+# a00: K=4 experts, standard MoE regularization
+seed: 42
+exp_tag: "a00"
+num_experts: 4
+lambda_lb: 0.01
+lambda_ent: 0.01
+lambda_div: 0.005
+label_smoothing: 0.3
+drop_rate: 0.3

@@ -1,0 +1,31 @@
+# a01: Squeezeformer Retry (smaller, lower lr, stronger reg)
+# Rationale (Session #2 a00 failure analysis):
+#   - a00 (17 layer, d_model=192, lr=4.5e-3) -> best val_f1=0.1623 (ep29), overfit
+#   - 14.56M params vs 8K training samples -> severe overfitting
+#   - lr=4.5e-3 too high for Transformer (SkateFormer a01 used 5e-4)
+# a01 fixes:
+#   - num_layers 17 -> 10 (params ~8.5M -> ~4-5M)
+#   - d_model 192 -> 128 (head_dim 32)
+#   - lr 4.5e-3 -> 5e-4 (SkateFormer baseline)
+#   - drop_path 0.1 -> 0.2, dropout 0.1 -> 0.2
+#   - weight_decay 0.05 -> 0.1
+#   - warmup_epochs 10 -> 15 (slower ramp)
+seed: 42
+exp_tag: "a01"
+optimizer: "AdamW"
+lr: 5.0e-4
+weight_decay: 0.1
+scheduler_type: "cosine_warmup"
+warmup_epochs: 15
+max_epochs: 120
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.1
+drop_path: 0.2
+
+num_layers: 10
+d_model: 128
+num_heads: 4
+mlp_ratio: 4.0
+conv_kernel_size: 15
+dropout: 0.2

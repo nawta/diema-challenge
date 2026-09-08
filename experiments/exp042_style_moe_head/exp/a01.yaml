@@ -1,0 +1,19 @@
+# a01: Feature-Adapter MoE (v2 redesign)
+# K=2, bottleneck adapters, learned routing (detached backbone features),
+# ReZero alpha=0.0, shared classifier, reduced regularization.
+seed: 42
+exp_tag: "a01"
+label_smoothing: 0.3
+drop_rate: 0.3
+
+# MoE v2 config
+num_experts: 2
+adapter_bottleneck: 64
+router_hidden: 64
+alpha_init: 0.0
+use_style_concat: false
+
+# Reduced regularization
+lambda_lb: 0.001
+lambda_ent: 0.001
+lambda_div: 0.0

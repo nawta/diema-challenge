@@ -1,0 +1,31 @@
+# a01: Conformer Retry — shrink capacity drastically (SkateFormer-like)
+# Rationale (a00 failure analysis):
+#   - a00: hidden_dim=384, 13.22M params, val_f1=0.110 at ep10 (vs SkateFormer 0.275)
+#   - capacity 100x SkateFormer (0.12M vs 13.22M), drastic overfit in 8K samples
+#   - lr=5e-4 ok but model too large
+# a01 fixes:
+#   - hidden_dim 384 -> 128 (head_dim 32, matches SkateFormer-range)
+#   - mlp_dim 1024 -> 384
+#   - num_heads 6 -> 4 (head_dim 32)
+#   - num_layers 5 -> 4
+#   - drop_path 0.1 -> 0.2, dropout 0.1 -> 0.2
+#   - weight_decay 1e-3 -> 1e-2
+seed: 42
+exp_tag: "a01"
+optimizer: "AdamW"
+lr: 5.0e-4
+weight_decay: 1.0e-2
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 100
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.1
+
+num_layers: 4
+hidden_dim: 128
+mlp_dim: 384
+num_heads: 4
+conv_kernel_size: 15
+dropout: 0.2
+drop_path: 0.2

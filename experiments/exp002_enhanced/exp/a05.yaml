@@ -1,0 +1,9 @@
+# a05: clip=64 + focal loss only (ablation)
+seed: 42
+clip_length: 64
+batch_size: 128
+loss_type: "focal"
+label_smoothing: 0.0
+test_clips: 1
+max_epochs: 65
+early_stopping_patience: 10

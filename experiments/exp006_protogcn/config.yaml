@@ -1,0 +1,43 @@
+# exp006: ProtoGCN baseline
+defaults:
+  - _self_
+  - exp: "a00"
+
+debug: false
+seed: 42
+fold: 0
+num_folds: 10
+exp_tag: "a00"
+
+data_path: ""
+target_repr: "6d"
+clip_length: 64
+num_workers: 8
+
+model_name: "protogcn"
+num_class: 12
+in_channels: 6
+base_channels: 64
+adj_strategy: "aagcn"
+dropout: 0.5
+adaptive: true
+kernel_size: 5
+num_proto: 16
+
+num_nodes: 25
+
+batch_size: 128
+max_epochs: 65
+optimizer: "SGD"
+lr: 0.2
+weight_decay: 5.0e-4
+scheduler_type: "cosine"
+warmup_epochs: 0
+early_stopping_patience: 10
+loss_type: "ce"
+label_smoothing: 0.1
+
+augment_rotate: true
+augment_mirror: true
+augment_speed: true
+augment_noise_sigma: 2.5

@@ -1,0 +1,44 @@
+# @package _global_
+# exp074 b00: option A from plan §11.4 — CTR-GCN with PC-edges-only subset.
+#
+# 16-node subset (head_chain + arms + lower_context, same nodes as the
+# Region-Aware variant a00) but using a GCN backbone with adjacency
+# constructed from existing DIEMA_INWARD_EDGES filtered/reindexed.
+#
+# Plan §11.4 distinguishes:
+#   - option A (this): PC-edges only subset, 13 edges (3 disconnected
+#     components: head+arms, r_leg, l_leg) — CTR-GCN's adaptive
+#     adjacency can learn cross-component edges.
+#   - option B (deferred, not run): UbH-Graph full with 5 edge subsets
+#     (s_id, s_cf, s_cp, s_cf2, s_cp2) + adjacent-hierarchy FC edges.
+#     Requires implementing the UbH-Graph adjacency layer; deferred for
+#     time-budget reasons (~6h additional dev).
+#
+# Architecture: CTR-GCN at base_channels=32 (vs full-25-node CTR-GCN
+# baseline = 64) → ~0.43M params (target < 0.5M sweet spot).
+seed: 42
+exp_tag: "b00"
+model_name: "ctrgcn_subset"
+optimizer: "AdamW"
+lr: 4.0e-3
+weight_decay: 5.0e-4
+scheduler_type: "cosine_warmup"
+warmup_epochs: 5
+max_epochs: 40
+clip_length: 64
+batch_size: 128
+label_smoothing: 0.3
+drop_rate: 0.3
+late_dropout: 0.8
+
+# CTR-GCN model-specific (non-region-aware)
+base_channels: 32
+adj_strategy: "aagcn"
+adaptive: true
+kernel_size: 5
+dropout: 0.5
+pool_type: "gap"
+use_arcface_head: false
+
+# Region-aware-specific keys are ignored when model_name="ctrgcn_subset"
+# (run.py branches on model_name).

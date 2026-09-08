@@ -1,0 +1,4 @@
+# exp065 a01: λ_attr = 0.10 (middle weight)
+seed: 42
+exp_tag: "a01"
+lambda_attr: 0.10

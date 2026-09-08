@@ -1,0 +1,5 @@
+# a03: Mixup alpha=0.2
+seed: 42
+exp_tag: "a03"
+joint_dropout_prob: 0.0
+mixup_alpha: 0.2

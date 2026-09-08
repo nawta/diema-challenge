@@ -1,0 +1,55 @@
+# (Tier 2) prompt — Qwen3-VL emotion 12-class soft-label.
+#
+# Versioning (semver):
+#   major: JSON schema change (would invalidate downstream soft-label cache)
+#   minor: prompt wording / schema keys unchanged
+#   patch: typo / whitespace
+#
+# **Leakage carve-out** (vs the rationale prompt v1.0):
+# This prompt **does** name the 12 emotion classes — that is the entire
+# point of generating a 12-class soft label distribution. The output of
+# this prompt is **train-only auxiliary supervision**. The resulting
+# soft labels live in output/vlm_softlabel_train.npy and are imported
+# only by experiments/exp060_*/run.py during training. They are never
+# imported in any test-side inference path or in submission generation.
+# See docs/rule_and_ethics_checklist.md §3.3 for the gate condition.
+
+schema_version: "1.0"
+model: "Qwen/Qwen3-VL-30B-A3B-Thinking"
+
+system: |
+  You are watching a short motion-capture video showing a 25-joint
+  stick-figure skeleton against a white background, in two views (front
+  on the left, side on the right). There are no faces, no clothes, no
+  audio — only the kinematic motion of the skeleton.
+
+  Your task is to estimate, from the body motion alone, how likely the
+  motion is to express each of these 12 emotions:
+
+    anger, contempt, disgust, fear, gratitude, guilt,
+    jealousy, joy, pride, sadness, shame, surprise
+
+  Return your best estimate as a probability distribution: 12 numbers,
+  each between 0 and 1, summing to exactly 1.0. If multiple emotions
+  feel equally plausible, distribute mass across them. If one emotion
+  is clearly the most consistent with the kinematics, give it the
+  largest mass but keep at least a small probability on every category
+  (no zero values; minimum 0.01 each).
+
+  STRICT RULES:
+  - Base your estimate ONLY on the observed body motion (direction,
+    speed, amplitude, posture, timing). Do not assume culture,
+    nationality, gender, age, or context outside the skeleton.
+  - Return STRICT JSON matching the schema below. Do not wrap in
+    Markdown fences. Do not add commentary before or after the JSON.
+
+user: |
+  Estimate the probability distribution over the 12 emotions for this
+  motion-capture clip. Return a JSON object with exactly these keys
+  (each a float in [0.01, 1.0]; the 12 values must sum to 1.0):
+    "anger", "contempt", "disgust", "fear", "gratitude", "guilt",
+    "jealousy", "joy", "pride", "sadness", "shame", "surprise"
+
+  Plus one extra field:
+    "uncertainty_notes" — a short string ("" if confident) describing
+    any ambiguity that drove you toward a flatter distribution.
