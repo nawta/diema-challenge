@@ -69,8 +69,18 @@ per-fold mean ± SD**, the official challenge convention, on the development
 | **11-way logit-mean (submitted)** | 12.98 | **36.80 ± 4.00** | 37.40 ± 4.06 |
 
 Numbers reproduce `paper/tables/table1_main_results.csv`. These are
-development-set (out-of-fold) figures; see the paper for the full protocol,
-confidence intervals, and the held-out test result.
+development-set (out-of-fold) figures; see the paper for the full protocol and
+confidence intervals.
+
+## Results (hidden test set)
+
+On the challenge's hidden test set (18 held-out performers, 1,944 clips; labels
+kept by the organisers), the submitted 11-way ensemble scored **37.23% Macro-F1**
+and **37.50% accuracy** on the organisers' final leaderboard
+(<https://sites.google.com/view/mmac-acii-2026/program-results>) and received
+the challenge's Best Performance Award. This is a single held-out score with no
+fold-level spread; it sits inside the 36.80 ± 4.00% range of the development
+result above.
 
 ## Repository structure
 
@@ -136,8 +146,9 @@ inputs.
 ## Citation
 
 If you use this code, please cite the accompanying paper (DIEM-A Challenge,
-MMAC @ ACII 2026). A BibTeX entry will be added here once the proceedings are
-published.
+MMAC @ ACII 2026). A preprint is on arXiv at <https://arxiv.org/abs/2609.02510>,
+and the talk page with slides is at <https://nawta.github.io/mmac2026/>. A
+BibTeX entry will be added here once the proceedings are published.
 
 ## License
 
