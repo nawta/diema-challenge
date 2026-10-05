@@ -88,9 +88,7 @@ Macro-F1 and Accuracy are reported as **10-fold leave-performers-out (LPO)
 per-fold mean ± SD**, the official challenge convention, on the development
 (out-of-fold) split. These development numbers fuse the members by averaging
 raw logits, the convention used in the paper's tables. The submitted test
-predictions averaged softmax probabilities instead; on the development folds
-the paper reports probability averaging as 1.15 pp lower in Macro-F1 than logit
-averaging for the 11 members.
+predictions averaged softmax probabilities instead.
 
 | System | Trainable params (M) | Macro-F1 (mean ± SD) | Accuracy (mean ± SD) |
 | --- | --- | --- | --- |
