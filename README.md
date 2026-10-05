@@ -147,8 +147,11 @@ pip install -e ".[mocap]"
 > **Note.** The BVH preprocessing code uses
 > [`pybvh`](https://pypi.org/project/pybvh/) and
 > [`pybvh-ml`](https://pypi.org/project/pybvh-ml/) from PyPI. `pyproject.toml`
-> pins `pybvh>=0.8.2,<0.9` and `pybvh-ml>=0.6,<0.7`; with pybvh 0.9.0 and
-> pybvh-ml 0.4.0, `import pybvh_ml` fails with an ImportError for `rotX`.
+> pins `pybvh==0.5.1` and `pybvh-ml==0.2.0`, the versions this code was
+> written for. Later pybvh-ml releases removed functions the code calls (for
+> example `mirror_quaternions`) and renamed the `joint_data` field, and pybvh
+> 0.8 and later no longer provide `pybvh.tools.rotX`, which pybvh-ml 0.2.0
+> imports.
 
 Copy `.env.example` to `.env` and fill in any values you need (e.g. an API key
 for the optional motion-to-text rationale step). `.env` is git-ignored.

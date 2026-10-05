@@ -13,8 +13,8 @@ dependencies = [
     "pytorch-lightning>=2.0",
     "torchmetrics>=0.11",
     # Motion capture
-    "pybvh>=0.8.2,<0.9",
-    "pybvh-ml>=0.6,<0.7",
+    "pybvh==0.5.1",
+    "pybvh-ml==0.2.0",
     # Experiment management
     "hydra-core>=1.3",
     "omegaconf>=2.3",
