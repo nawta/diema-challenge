@@ -1,13 +1,35 @@
 # diema-challenge
 
-Emotion recognition from motion capture — the code behind our **Best Performance
-Award** entry to the **DIEM-A Challenge at MMAC @ ACII 2026**.
+[![arXiv](https://img.shields.io/badge/arXiv-2609.02510-b31b1b.svg)](https://arxiv.org/abs/2609.02510)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-The task is 12-class emotion classification from full-body motion-capture
-recordings. This repository contains the model implementations, training and
-feature-extraction code, ensembling and calibration tools, the explainability
-(motion-to-text rationale) pipeline, and the scripts that produce the paper's
-figures and tables.
+This repository holds the code for a 12-class emotion classifier that reads
+full-body motion-capture skeletons and averages the outputs of 11 models. On the
+hidden test set of the DIEM-A Challenge at MMAC @ ACII 2026 (18 performers not
+seen in training, 1,944 clips), it scored 37.23% Macro-F1, the unweighted mean of
+the 12 per-class F1 scores (chance is 8.3%), and won the challenge's Best
+Performance Award.
+
+The paper
+[*Orthogonal Ensembles and Tested Explanations for Performer-Independent
+Body-Motion Emotion Recognition*](https://arxiv.org/abs/2609.02510) (Nishida and
+Ishiguro, arXiv:2609.02510) describes the method and its evaluation. The
+repository contains the model implementations,
+the training and feature-extraction code, the ensembling and calibration tools,
+the explainability (motion-to-text rationale) pipeline, and the scripts that
+produce the paper's figures and tables. Talk slides are at
+<https://nawta.github.io/mmac2026/>.
+
+<p align="center">
+  <img src="paper/figures/architecture.png" alt="Submitted system: a 25-joint, 64-frame skeleton clip goes into 11 models in four groups (GCN family, attention, hybrid/MLP, external pretraining), whose outputs are combined by an equal-weight logit mean into a 12-class emotion prediction." width="560">
+</p>
+
+*Submitted system. Each 64-frame clip of a 25-joint skeleton goes to 11 models
+from four model families. Their outputs are combined by an equal-weight logit
+mean into one of 12 emotions.*
+
+You can check that the models build and run without the data; see
+[Try it without the data](#try-it-without-the-data).
 
 > **The datasets are not included and cannot be redistributed.** See
 > [Data availability](#data-availability) before you try to run anything.
@@ -122,6 +144,45 @@ pip install -e ".[mocap]"
 Copy `.env.example` to `.env` and fill in any values you need (e.g. an API key
 for the optional motion-to-text rationale step). `.env` is git-ignored.
 
+## Try it without the data
+
+`tools/smoke_demo.py` builds the 7 ensemble members that are trained from
+scratch, using the settings from the submitted run, and feeds them a random
+batch shaped like real input: 2 clips × 6 channels (6D joint rotation) × 64
+frames × 25 joints. It prints each model's output shape and averages the logits
+with equal weights, as the paper describes for the ensemble. The weights are untrained, so the predicted emotions
+are random. It runs on CPU in a few seconds and does not need the dataset or
+`pybvh-ml`.
+
+```bash
+uv venv -p 3.10 .venv
+uv pip install -p .venv -e .
+.venv/bin/python tools/smoke_demo.py
+```
+
+Expected output:
+
+```
+Random input batch: (2, 6, 64, 25)  (N, channels, frames, joints)
+
+model                            logits shape
+ST-GCN++ (baseline)              (2, 12)
+CTR-GCN                          (2, 12)
+SkateFormer                      (2, 12)
+ProtoGCN                         (2, 12)
+Conv1D+Transformer               (2, 12)
+Keypoint-pool MLP                (2, 12)
+Region-Aware Conv-Transformer    (2, 12)
+
+Logit-mean fusion of 7 models: (2, 12)
+Predicted emotions (random weights, so these mean nothing): [...]
+```
+
+The other 4 members (MotionBERT, C3D statistics, and two MAMP probes) need
+pretrained weights or features computed from the data, so the demo leaves them
+out. `pytest tests/test_new_models.py` runs the shape and gradient tests for
+the sequence models on the same kind of synthetic input.
+
 ## Usage
 
 Most tools are Click CLIs; run with `--help` for options. A typical flow, once
@@ -145,10 +206,22 @@ inputs.
 
 ## Citation
 
-If you use this code, please cite the accompanying paper (DIEM-A Challenge,
-MMAC @ ACII 2026). A preprint is on arXiv at <https://arxiv.org/abs/2609.02510>,
-and the talk page with slides is at <https://nawta.github.io/mmac2026/>. A
-BibTeX entry will be added here once the proceedings are published.
+If you use this code, please cite the paper:
+
+```bibtex
+@misc{nishida2026orthogonalensemblestestedexplanations,
+      title={Orthogonal Ensembles and Tested Explanations for Performer-Independent Body-Motion Emotion Recognition},
+      author={Naoto Nishida and Yoshio Ishiguro},
+      year={2026},
+      eprint={2609.02510},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2609.02510},
+}
+```
+
+The talk page with slides is at <https://nawta.github.io/mmac2026/>. We will
+add the proceedings entry here once it is published.
 
 ## License
 
