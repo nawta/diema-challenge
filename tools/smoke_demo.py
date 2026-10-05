@@ -4,9 +4,10 @@ This script checks that the code installs and runs before you have the
 DIEM-A data. It builds the 7 skeleton models that the submitted 11-model
 ensemble trains from scratch, using each member's settings (``config.yaml``
 plus the ``exp/<variant>.yaml`` used in the submission). It then feeds them
-a random batch shaped like real model input and averages their raw logits
-with equal weights, the logit-mean rule described in the README and the
-paper.
+a random batch shaped like real model input, turns each model's logits
+into class probabilities with a softmax, and averages the probabilities
+with equal weights. This is the fusion rule the submission used (see
+experiments/exp088_final_ensemble_submission/build_final_submission.py).
 
 The weights are random, so the predicted emotions are meaningless. The
 script only shows the input/output shapes and that each model runs.
@@ -82,18 +83,20 @@ def main(batch_size: int, device: str, seed: int) -> None:
     x = torch.randn(batch_size, 6, 64, 25, device=device)
     print(f"Random input batch: {tuple(x.shape)}  (N, channels, frames, joints)\n")
 
-    all_logits = []
+    all_probs = []
     print(f"{'model':32s} logits shape")
     for display, exp_dir, variant in MEMBERS:
         model = build_model(load_model_cfg(exp_dir, variant)).to(device).eval()
         with torch.no_grad():
             logits = model(x)["logits"]
-        all_logits.append(logits)
+        all_probs.append(torch.softmax(logits, dim=1))
         print(f"{display:32s} {tuple(logits.shape)}")
 
-    fused = torch.stack(all_logits).mean(dim=0)
+    fused = torch.stack(all_probs).mean(dim=0)
     pred = fused.argmax(dim=1).tolist()
-    print(f"\nLogit-mean fusion of {len(all_logits)} models: {tuple(fused.shape)}")
+    print(f"\nMean of softmax probabilities over {len(all_probs)} models: {tuple(fused.shape)}")
+    for i, row in enumerate(fused.tolist()):
+        print(f"  clip {i}: " + " ".join(f"{IDX_TO_EMOTION[k]}={v:.3f}" for k, v in enumerate(row)))
     print("Predicted emotions (random weights, so these mean nothing):", [IDX_TO_EMOTION[i] for i in pred])
 
 
